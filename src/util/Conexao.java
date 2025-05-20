@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 public class Conexao {
 
-    private  String DRIVER = "com.mysql.jdbc.Driver";
+    private  String DRIVER = "com.mysql.cj.jdbc.Driver";
     private  String URL = "jdbc:mysql://localhost:3306/hotelaria";
     private  String USER = "dbaHotel";
     private  String PASS = "dbaHotel123";
@@ -27,7 +27,7 @@ public class Conexao {
             return con;
         }
 
-        catch (SQLException erro) {
+        catch (SQLException | ClassNotFoundException erro) {
             System.out.println(" Erro ao conectar ao Banco de Dados " + erro);
             return null;
         }
