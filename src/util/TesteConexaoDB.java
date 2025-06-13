@@ -1,4 +1,6 @@
 package util;
+import dao.*;
+
 import java.sql.Connection;
 
 public class TesteConexaoDB {
@@ -9,6 +11,30 @@ public class TesteConexaoDB {
         if (condb != null) {
             System.out.println("Conexão estabelecida com sucesso!");
             try {
+                UsuariosDAO usuariosDAO = new UsuariosDAO();
+                usuariosDAO.deletarUsuario();
+                System.out.println("Usuario deletado com sucesso!");
+
+                PedidosDAO pedidosDAO = new PedidosDAO();
+                pedidosDAO.deletarPedidos();
+                System.out.println("Pedidos deletado com sucesso!");
+
+                RoleDAO roleDAO = new RoleDAO();
+                roleDAO.deletarRole();
+                System.out.println("Role deletado com sucesso!");
+
+                ClienteDAO clienteDAO = new ClienteDAO();
+                clienteDAO.deletarCliente();
+                System.out.println("Cliente deletado com sucesso!");
+
+                AdicionalDAO adicionalDAO = new AdicionalDAO();
+                adicionalDAO.deletarAdicional();
+                System.out.println("Adicional deletado com sucesso!");
+
+                QuartoDAO quartoDAO = new QuartoDAO();
+                quartoDAO.deletarQuarto();
+                System.out.println("Quarto deletado com sucesso!");
+
                 condb.close();
                 System.out.println("Conexão encerrada!");
             } catch (Exception erro) {
