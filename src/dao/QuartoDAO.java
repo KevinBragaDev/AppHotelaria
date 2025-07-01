@@ -37,13 +37,14 @@ public class QuartoDAO {
         Connection conndb = conexao.conectar();
         try {
             PreparedStatement alterarQuarto = conndb.prepareStatement
-                    ("UPDATE quartos" + "SET nome = ?, numero = ?, qnt_cama_casal = ?, qnt_cama_solteiro = ?, preco = ?, disponivel = ? WHERE id = ?;");
+                    ("UPDATE quartos " + "SET nome = ?, numero = ?, qnt_cama_casal = ?, qnt_cama_solteiro = ?, preco = ?, disponivel = ? WHERE id = ?;");
             alterarQuarto.setString(1, "Quarto Casal");
             alterarQuarto.setString(2, "321");
             alterarQuarto.setInt(3, 5);
             alterarQuarto.setInt(4, 3);
             alterarQuarto.setDouble(5, 500.00);
             alterarQuarto.setBoolean(6, true);
+            alterarQuarto.setInt(7, 1);
             int linhaAfetada = alterarQuarto.executeUpdate();
             conndb.close();
             return linhaAfetada > 0;
@@ -60,14 +61,14 @@ public class QuartoDAO {
                     "FROM quartos WHERE id = ?");
             buscaQuarto.setInt(1, 1);
             ResultSet resultado = buscaQuarto.executeQuery();
-            while (resultado.next());{
+            while (resultado.next()) {
                 String nome = resultado.getString("nome");
                 String numero = resultado.getString("numero");
                 int qnt_cama_casal = resultado.getInt("qnt_cama_casal");
                 int qnt_cama_solteiro = resultado.getInt("qnt_cama_solteiro");
                 double preco = resultado.getDouble("preco");
                 boolean disponivel = resultado.getBoolean("disponivel");
-                System.out.println("nome: " + nome + "numero" + numero + "qnt_cama_casal" + qnt_cama_casal + "qnt_cama_solteiro" + qnt_cama_solteiro + "preco" + preco + "disponivel" + disponivel);
+                System.out.println("nome: " + nome + "numero: " + numero + " qnt_cama_casal: " + qnt_cama_casal + " qnt_cama_solteiro: " + qnt_cama_solteiro + " preco: " + preco + " disponivel: " + disponivel);
             }
             conndb.close();
         }

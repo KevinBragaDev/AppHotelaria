@@ -31,9 +31,10 @@ public class AdicionalDAO {
         Connection conndb = conexao.conectar();
         try {
             PreparedStatement alterarAdicional = conndb.prepareStatement
-                    ("UPDATE adicionais" + "SET nome = ?, preco = ? WHERE id = ?;");
+                    ("UPDATE adicionais " + "SET nome = ?, preco = ? WHERE id = ?;");
             alterarAdicional.setString(1, "Mateus");
             alterarAdicional.setDouble(2, 200.00);
+            alterarAdicional.setInt(3, 1);
 
             int linhaAfetada = alterarAdicional.executeUpdate();
             conndb.close();
@@ -52,7 +53,7 @@ public class AdicionalDAO {
             buscaAdicional.setInt(1, 1);
             ResultSet resultado = buscaAdicional.executeQuery();
 
-            while (resultado.next());{
+            while (resultado.next()) {
                 String nome = resultado.getString("nome");
                 Double preco = resultado.getDouble("preco");
                 System.out.println("nome: " + nome + " preco: " + preco);

@@ -30,8 +30,9 @@ public class RoleDAO {
         Connection conndb = conexao.conectar();
         try {
             PreparedStatement alterarRole = conndb.prepareStatement
-                    ("UPDATE cargos" + "SET nome = ? WHERE id = ?;");
+                    ("UPDATE cargos " + "SET nome = ? WHERE id = ?;");
             alterarRole.setString(1, "Zelador");
+            alterarRole.setInt(2, 1);
             int linhaAfetada = alterarRole.executeUpdate();
             conndb.close();
             return linhaAfetada > 0;

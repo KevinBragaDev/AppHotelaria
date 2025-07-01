@@ -35,7 +35,7 @@ public class ReservasDAO {
         Connection conndb = conexao.conectar();
         try {
             PreparedStatement alterarReserva = conndb.prepareStatement
-                    ("UPDATE reservas" +
+                    ("UPDATE reservas " +
                             "SET pedido_id = ?, quarto_id = ?, adicional_id = ?, fim = ?, inicio = ?" + " WHERE id = ?;");
             alterarReserva.setInt(1, 1);
             alterarReserva.setInt(2, 2);
@@ -59,7 +59,7 @@ public class ReservasDAO {
                     "FROM reservas WHERE id = ?");
             buscaReserva.setInt(1, 1);
             ResultSet resultado = buscaReserva.executeQuery();
-            while (resultado.next());{
+            while (resultado.next()) {
                 int pedido_id = resultado.getInt("pedido_id");
                 int quarto_id = resultado.getInt("quarto_id");
 

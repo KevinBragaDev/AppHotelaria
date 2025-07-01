@@ -34,10 +34,11 @@ public class UsuariosDAO {
         Connection conndb = conexao.conectar();
         try {
             PreparedStatement alterarUsuario = conndb.prepareStatement
-                    ("UPDATE usuarios" + "SET nome = ?, email = ?, senha = md5(?) + ?, " +
-                      "fk_cargos = ? WHERE id = ?;");
+                    ("UPDATE usuarios " + "SET nome = ?, email = ?, senha = md5(?)," +
+                      "cargo_id = ? WHERE id = ?;");
             alterarUsuario.setString(1,"Keven");
             alterarUsuario.setString(2, "keven@gmail.com");
+            alterarUsuario.setString(3,"54321");
             alterarUsuario.setInt(4,1);
             alterarUsuario.setInt(5,1);
 
@@ -49,24 +50,27 @@ public class UsuariosDAO {
             System.out.println("Erro ao atualizar usuario: "+erro);
         } return false;
     }
-    public void pesquisarUsuario() {
+    public boolean autenticarUsuario(Usuario usuario) {
             try {
                 Connection conndb = conexao.conectar();
-                PreparedStatement buscaUsuario = conndb.prepareStatement("SELECT nome, email " +
-                        "FROM usuarios WHERE id = ?");
-                buscaUsuario.setInt(1, 1);
-                ResultSet resultado = buscaUsuario.executeQuery();
+                PreparedStatement stmtUsuario = conndb.prepareStatement
+                        ("SELECT nome FROM usuarios WHERE email = ? AND senha = md5(?);");
 
-             while (resultado.next());{
-                 String nome = resultado.getString("nome");
-                 String email = resultado.getString("email");
-                    System.out.println("Nome: " + nome + " Email: " + email);
-                }
+                stmtUsuario.setString(1, usuario.getEmail());
+                stmtUsuario.setString(2, usuario.getSenha());
+                ResultSet resultado = stmtUsuario.executeQuery();
+
+                boolean acessoAutorizado = resultado.next();
+                    String nome = resultado.getString("nome");
+                System.out.println("Olá, seja bem-vindo " + nome);
                 conndb.close();
+                return  acessoAutorizado;
             }
             catch (Exception erro) {
                 System.out.println("Erro ao pesquisar usuario: "+erro);
+
             }
+            return true;
     }
 
         public boolean deletarUsuario() {
@@ -74,6 +78,7 @@ public class UsuariosDAO {
             try {
                 PreparedStatement removeUsuario = conndb.prepareStatement
                         ("DELETE FROM usuarios WHERE id = ?;");
+
                 removeUsuario.setInt(1, 1);
                 int linhaAfetada = removeUsuario.executeUpdate();
                 conndb.close();

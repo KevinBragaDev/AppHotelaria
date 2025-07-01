@@ -33,10 +33,11 @@ public class PedidosDAO {
         Connection conndb = conexao.conectar();
         try {
             PreparedStatement alterarPedido = conndb.prepareStatement
-                    ("UPDATE pedidos" + "SET usuario_id = ?, cliente_id = ?, pagamento = ? WHERE id = ?;");
-            alterarPedido.setInt(1, 2);
-            alterarPedido.setInt(2, 2);
+                    ("UPDATE pedidos " + "SET usuario_id = ?, cliente_id = ?, pagamento = ? WHERE id = ?;");
+            alterarPedido.setInt(1, 1);
+            alterarPedido.setInt(2, 1);
             alterarPedido.setString(3, "Credito");
+            alterarPedido.setInt(4, 3);
 
             int linhaAfetada = alterarPedido.executeUpdate();
             conndb.close();
@@ -50,14 +51,12 @@ public class PedidosDAO {
     public void pesquisarPedido() {
         try {
             Connection conndb = conexao.conectar();
-            PreparedStatement buscaPedido = conndb.prepareStatement("SELECT usuario_id, cliente_id, pagamento" +
+            PreparedStatement buscaPedido = conndb.prepareStatement("SELECT usuario_id, cliente_id, pagamento " +
                     "FROM pedidos WHERE id = ?");
-            buscaPedido.setInt(1, 1);
-            buscaPedido.setInt(2, 1);
-            buscaPedido.setString(3, "PIX");
+            buscaPedido.setInt(1, 3);
             ResultSet resultado = buscaPedido.executeQuery();
 
-            while (resultado.next());{
+            while (resultado.next()) {
             int usuario_id = resultado.getInt("usuario_id");
             int cliente_id = resultado.getInt("cliente_id");
             String pagamento = resultado.getString("pagamento");

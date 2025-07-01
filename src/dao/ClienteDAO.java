@@ -34,11 +34,12 @@ public class ClienteDAO {
         Connection conndb = conexao.conectar();
         try {
             PreparedStatement alterarCliente = conndb.prepareStatement
-                    ("UPDATE clientes" + "SET nome = ?, email = ?, telefone = ?, cpf = ? WHERE id = ?;");
+                    ("UPDATE clientes " + "SET nome = ?, email = ?, telefone = ?, cpf = ? WHERE id = ?;");
             alterarCliente.setString(1, "Mateus");
             alterarCliente.setString(2, "mateus@gmail.com");
             alterarCliente.setString(3, "987654321");
             alterarCliente.setString(4, "654321");
+            alterarCliente.setInt(5, 1);
 
             int linhaAfetada = alterarCliente.executeUpdate();
             conndb.close();
@@ -57,7 +58,7 @@ public class ClienteDAO {
             buscaCliente.setInt(1, 1);
             ResultSet resultado = buscaCliente.executeQuery();
 
-            while (resultado.next());{
+            while (resultado.next()) {
                 String nome = resultado.getString("nome");
                 String email = resultado.getString("email");
                 String telefone = resultado.getString("telefone");
