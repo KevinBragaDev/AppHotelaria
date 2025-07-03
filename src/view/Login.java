@@ -1,5 +1,6 @@
 package view;
 
+import controller.UsuariosController;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -30,20 +31,6 @@ public class Login extends Application {
         VBox Imagem = new VBox(imgFundoView);
         Image imgIcon = new Image(getClass().getResourceAsStream("/view/resources/img/granIcon.PNG"));
 
-        Button btnLogar = new Button("Logar");
-        btnLogar.setPrefWidth(150); // Largura
-        btnLogar.setPrefHeight(20); // Altura
-
-        String styleButton = "-fx-background-color: transparent;" +
-                "-fx-border-color: #006eff;" +
-                "-fx-graphic-text-gap: 10px;" +
-                "-fx-cursor:hand;"; //Setar o cursor de mãozinha para o mouse
-        btnLogar.setStyle(styleButton + "-fx-border-color: #006eff; -fx-font-size: 14px; -fx-padding: 10 20 10 20;");
-        btnLogar.setStyle(styleButton);
-
-        btnLogar.setOnMouseEntered(evento->
-                btnLogar.setStyle(styleButton.replace("transparent","#365afa")));
-        btnLogar.setOnMouseExited(evento-> btnLogar.setStyle(styleButton));
 
 
         Label lblTitulo = new Label("FAÇA SEU LOGIN");
@@ -73,6 +60,35 @@ public class Login extends Application {
 
         campoSenha.setMaxWidth(200);
         campoSenhaVisivel.setMaxWidth(200);
+
+        Button btnLogar = new Button("Logar");
+        btnLogar.setPrefWidth(150); // Largura
+        btnLogar.setPrefHeight(20); // Altura
+
+        String styleButton = "-fx-background-color: transparent;" +
+                "-fx-border-color: #006eff;" +
+                "-fx-graphic-text-gap: 10px;" +
+                "-fx-cursor:hand;"; //Setar o cursor de mãozinha para o mouse
+        btnLogar.setStyle(styleButton + "-fx-border-color: #006eff; -fx-font-size: 14px; -fx-padding: 10 20 10 20;");
+        btnLogar.setStyle(styleButton);
+
+        btnLogar.setOnMouseEntered(evento->
+                btnLogar.setStyle(styleButton.replace("transparent","#365afa")));
+        btnLogar.setOnMouseExited(evento-> btnLogar.setStyle(styleButton));
+
+        /* Usuario clica no botão Login para se autenticar com os valores dos campos
+        campoEmail e txtSenha (senha visivel) || campoSenha (senha oculta) */
+        btnLogar.setOnAction(evento-> {
+            String email = campoEmail.getText();
+            String senha = campoSenha.isVisible() ? campoSenha.getText() : campoSenhaVisivel.getText();
+            UsuariosController usuariosController = new UsuariosController();
+            boolean loginSucesso = usuariosController.autenticarCredenciais(email,senha);
+            if (loginSucesso) {
+                System.out.println("Login efetuado com sucesso!");
+            } else {
+                System.out.println("Login invalido!");
+            }
+        });
 
 // Sincronização entre os dois campos
         campoSenhaVisivel.managedProperty().bind(campoSenha.visibleProperty().not());
